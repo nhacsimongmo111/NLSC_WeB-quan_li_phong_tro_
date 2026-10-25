@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Theme màu cam ấm đồng bộ với /phong-tro (Chotot / Phongtro123) */
+    --primary-orange: #f05123;
+    --primary-orange-hover: #d83a0e;
+    --primary-orange-light: #fff5f2;
+    --primary-orange-subtle: #ffeedb;
+    --primary-orange-border: #fed7aa;
+
+    /* Tương thích ngược với các class indigo cũ */
+    --primary-indigo: var(--primary-orange);
+    --primary-indigo-hover: var(--primary-orange-hover);
+    --primary-indigo-light: var(--primary-orange-light);
+
+    --sidebar-bg: #0f172a;
+    --sidebar-hover: #1e293b;
+    --sidebar-text: #94a3b8;
+    --sidebar-text-active: #ffffff;
+    --sidebar-width: 260px;
+    --bg-main: #f8fafc;
+    --border-color: #e2e8f0;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+/* === LAYOUT CHÍNH: SIDEBAR + MAIN === */
+.app-wrapper {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.app-sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--sidebar-bg);
+    color: #cbd5e1;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1030;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-sidebar .sidebar-brand {
+    padding: 1.25rem 1.5rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.app-sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    margin: 0.2rem 0.75rem;
+    border-radius: 0.5rem;
+    color: var(--sidebar-text);
+    font-weight: 500;
+    font-size: 0.92rem;
+    transition: all 0.2s ease;
+}
+
+.app-sidebar .nav-link:hover {
+    color: var(--sidebar-text-active);
+    background-color: var(--sidebar-hover);
+}
+
+.app-sidebar .nav-link.active {
+    color: #ffffff;
+    background-color: var(--primary-orange);
+    box-shadow: 0 4px 14px rgba(240, 81, 35, 0.4);
+}
+
+.app-sidebar .nav-link i {
+    font-size: 1.15rem;
+}
+
+.app-main {
+    flex-grow: 1;
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-color: var(--bg-main);
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === TOPBAR HEADER === */
+.app-topbar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.85rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+/* === CARD & SHADOWS HIỆN ĐẠI === */
+.card {
+    border: 1px solid var(--border-color);
+    border-radius: 0.85rem;
+    background: #ffffff;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.06), 0 6px 8px -6px rgba(0, 0, 0, 0.04);
+}
+
+/* === THẺ THỐNG KÊ (STAT METRIC CARDS) === */
+.stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+/* === THẺ PHÒNG (ROOM TILES) & HIỆU ỨNG ĐÈN LED === */
+.room-tile {
+    position: relative;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    background: #ffffff;
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.room-tile:hover {
+    transform: translateY(-3px);
+    border-color: #cbd5e1;
+    box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.08);
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.65rem;
+    border-radius: 9999px;
+}
+
+.led-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    position: relative;
+}
+
+/* Trạng thái: Trống (Available - Xanh lá) */
+.status-available {
+    background-color: #ecfdf5;
+    color: #065f46;
+}
+.status-available .led-dot {
+    background-color: #10b981;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: pulse-green 2s infinite;
+}
+
+/* Trạng thái: Đang thuê (Rented - Xanh Blue thanh lịch) */
+.status-rented {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+}
+.status-rented .led-dot {
+    background-color: #2563eb;
+}
+
+/* Trạng thái: Bảo trì (Maintenance - Hổ phách/Vàng) */
+.status-maintenance {
+    background-color: #fffbeb;
+    color: #92400e;
+}
+.status-maintenance .led-dot {
+    background-color: #f59e0b;
+}
+
+/* === SELECT TRẠNG THÁI NHANH TRONG DATA TABLE === */
+.status-select-available {
+    border-color: #a7f3d0 !important;
+    color: #065f46 !important;
+    background-color: #ecfdf5 !important;
+    font-weight: 500;
+}
+
+.status-select-rented {
+    border-color: #bfdbfe !important;
+    color: #1d4ed8 !important;
+    background-color: #eff6ff !important;
+    font-weight: 500;
+}
+
+.status-select-maintenance {
+    border-color: #fde68a !important;
+    color: #92400e !important;
+    background-color: #fffbeb !important;
+    font-weight: 500;
+}
+
+@keyframes pulse-green {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+/* === NÚT BẤM (BUTTONS) & MÀU CHỦ ĐẠO CAM ẤM === */
+.btn-orange,
+.btn-indigo {
+    background-color: var(--primary-orange);
+    color: #ffffff;
+    border: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-orange:hover, .btn-orange:focus,
+.btn-indigo:hover, .btn-indigo:focus {
+    background-color: var(--primary-orange-hover);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(240, 81, 35, 0.35);
+}
+
+.btn-outline-orange,
+.btn-outline-indigo {
+    color: var(--primary-orange);
+    border: 1px solid var(--primary-orange-border);
+    background: #ffffff;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-orange:hover,
+.btn-outline-indigo:hover {
+    background-color: var(--primary-orange-light);
+    color: var(--primary-orange-hover);
+    border-color: var(--primary-orange);
+}
+
+/* UTILITY CLASSES MÀU CAM */
+.text-orange,
+.text-indigo {
+    color: var(--primary-orange) !important;
+}
+
+.bg-orange,
+.bg-indigo {
+    background-color: var(--primary-orange) !important;
+    color: #ffffff !important;
+}
+
+.bg-orange-subtle,
+.bg-indigo-subtle {
+    background-color: var(--primary-orange-light) !important;
+    color: var(--primary-orange) !important;
+}
+
+.border-orange {
+    border-color: var(--primary-orange-border) !important;
+}
+
+/* === RESPONSIVE MOBILE === */
+@media (max-width: 991.98px) {
+    .app-sidebar {
+        transform: translateX(-100%);
+    }
+    .app-sidebar.show {
+        transform: translateX(0);
+    }
+    .app-main {
+        margin-left: 0;
+    }
+    .sidebar-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.6);
+        z-index: 1025;
+        backdrop-filter: blur(2px);
+    }
+}
